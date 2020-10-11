@@ -1,0 +1,121 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a test API to save and retrive the recently viewed items for a site",
+    "version": "1.0.0",
+    "title": "Recently Viewed"
+  },
+  "host": "localhost:10000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "recent",
+      "description": "Everything item you have seen recently"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/recent": {
+      "get": {
+        "tags": [
+          "recent"
+        ],
+        "summary": "Retrive all the recently viewed items",
+        "description": "This API is to get all the recentlty viewed items from the database",
+        "operationId": "getItem",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "description": "User Id of the user making the request",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "From a point in the database",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of items to retrive",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "recent"
+        ],
+        "summary": "Create an entry for recently viewed item",
+        "description": "This API is to add a recentlty viewed item into the database",
+        "operationId": "addItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "description": "User Id of the user making the request",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Recent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Recent": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string"
+        },
+        "productName": {
+          "type": "string"
+        },
+        "viewedAt": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
